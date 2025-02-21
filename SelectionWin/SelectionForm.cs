@@ -2,7 +2,7 @@ namespace SelectionWin;
 
 public partial class SelectionForm : Form
 {
-private Bitmap screenBitmap;
+    private Bitmap screenBitmap;
     private Point startPoint, endPoint;
     private bool isSelecting = false;
     private Rectangle lastRect = Rectangle.Empty;
@@ -111,10 +111,11 @@ private Bitmap screenBitmap;
             if (rect.Width > 0 && rect.Height > 0)
             {
                 Console.WriteLine("MouseUp triggered: Creating EditingForm");
+                // 从原始 screenBitmap 裁剪出选择区域，不包含边框
                 Bitmap selectedBmp = new Bitmap(rect.Width, rect.Height);
                 using (Graphics g = Graphics.FromImage(selectedBmp))
                 {
-                    g.CopyFromScreen(rect.Location, Point.Empty, rect.Size);
+                    g.DrawImage(screenBitmap, 0, 0, rect, GraphicsUnit.Pixel);
                 }
                 editingForm = new EditingForm(selectedBmp, rect, this, sizeDisplayForm, previousOperations);
                 editingForm.Show();
@@ -162,7 +163,6 @@ private Bitmap screenBitmap;
         {
             Console.WriteLine("Returning from edit: Starting selection with initial rect " + initialRect);
             StartSelectionFromEdit();
-            // 保持放大镜隐藏，直到选择完成或取消
             magnifierForm.Hide();
             isReturningFromEdit = false;
         }
@@ -184,7 +184,7 @@ private Bitmap screenBitmap;
             using (Pen pen = new Pen(Color.LightBlue, 3))
             {
                 pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-                e.Graphics.DrawRectangle(pen, rect);
+                e.Graphics.DrawRectangle(pen, rect); // 仅作为视觉提示，不影响保存
             }
         }
         else if (editingForm != null)
@@ -260,23 +260,23 @@ private Bitmap screenBitmap;
                 startPoint = new Point(initialRect.Right, initialRect.Y);
                 endPoint = new Point(initialRect.X, initialRect.Bottom);
                 break;
-            case 4: // 上中点：固定左右边界，允许向上扩展
+            case 4: // 上中点
                 startPoint = new Point(initialRect.X, initialRect.Bottom);
                 endPoint = new Point(initialRect.Right, initialRect.Y);
                 break;
-            case 5: // 右中点：固定上下边界，允许向右扩展
+            case 5: // 右中点
                 startPoint = new Point(initialRect.X, initialRect.Y);
                 endPoint = new Point(initialRect.Right, initialRect.Bottom);
                 break;
-            case 6: // 下中点：固定左右边界，允许向下扩展
+            case 6: // 下中点
                 startPoint = initialRect.Location;
                 endPoint = new Point(initialRect.Right, initialRect.Bottom);
                 break;
-            case 7: // 左中点：固定上下边界，允许向左扩展
+            case 7: // 左中点
                 startPoint = new Point(initialRect.Right, initialRect.Y);
                 endPoint = new Point(initialRect.X, initialRect.Bottom);
                 break;
-            case -1: // 右键触发：允许自由调整
+            case -1: // 右键触发
                 startPoint = initialRect.Location;
                 endPoint = new Point(initialRect.Right, initialRect.Bottom);
                 break;

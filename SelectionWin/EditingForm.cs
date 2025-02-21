@@ -11,8 +11,7 @@ namespace SelectionWin;
 
 public class EditingForm : Form
 {
-
-   private Bitmap originalImage;
+private Bitmap originalImage;
     private List<DrawOperation> committedOperations;
     private DrawOperation currentOperation = null;
     private Tool currentTool = Tool.None;
@@ -27,7 +26,8 @@ public class EditingForm : Form
     private List<Point> mosaicPoints = new List<Point>();
     private readonly Font textFont = new Font("Arial", 12, FontStyle.Regular, GraphicsUnit.Point);
     private readonly Color textColor = Color.Red;
-    private int mosaicSize = 10; // 默认马赛克尺寸
+    private int mosaicSize = 10;
+    private Panel borderPanel;
 
     public EditingForm(Bitmap image, Rectangle rect, SelectionForm parent, SizeDisplayForm sizeForm, List<DrawOperation> previousOps)
     {
@@ -42,21 +42,26 @@ public class EditingForm : Form
     private void InitializeComponents()
     {
         this.FormBorderStyle = FormBorderStyle.None;
-        this.Size = selectedRect.Size;
-        this.Location = selectedRect.Location;
+        this.Size = new Size(selectedRect.Width + 6, selectedRect.Height + 6);
+        this.Location = new Point(selectedRect.X - 3, selectedRect.Y - 3);
         this.BackColor = Color.Gray;
-        this.TopMost = true;
-        this.Deactivate += EditingForm_Deactivate;
-        this.KeyDown += EditingForm_KeyDown;
-        this.KeyPreview = true;
+
+        borderPanel = new Panel
+        {
+            Location = new Point(0, 0),
+            Size = this.Size,
+            BackColor = Color.Transparent
+        };
+        borderPanel.Paint += BorderPanel_Paint;
+        this.Controls.Add(borderPanel);
 
         pictureBox1 = new PictureBox
         {
-            Location = Point.Empty,
+            Location = new Point(3, 3),
             Size = selectedRect.Size,
             Cursor = Cursors.Default
         };
-        this.Controls.Add(pictureBox1);
+        borderPanel.Controls.Add(pictureBox1);
 
         pictureBox1.MouseDown += PictureBox1_MouseDown;
         pictureBox1.MouseMove += PictureBox1_MouseMove;
@@ -69,11 +74,20 @@ public class EditingForm : Form
 
         this.Load += (s, e) =>
         {
-            this.Location = selectedRect.Location;
+            this.Location = new Point(selectedRect.X - 3, selectedRect.Y - 3);
             toolbarForm.UpdatePosition();
             sizeDisplayForm.UpdateSize(selectedRect);
         };
         this.FormClosed += (s, e) => toolbarForm.Close();
+    }
+
+    private void BorderPanel_Paint(object sender, PaintEventArgs e)
+    {
+        using (Pen pen = new Pen(Color.Chartreuse, 3))
+        {
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            e.Graphics.DrawRectangle(pen, 0, 0, this.Width - 1, this.Height - 1);
+        }
     }
 
     public void SetTool(Tool tool)
@@ -81,7 +95,7 @@ public class EditingForm : Form
         currentTool = tool;
         if (currentTool == Tool.Mosaic)
         {
-            pictureBox1.Cursor = CreateCircleCursor(mosaicSize); // 设置圆形光标
+            pictureBox1.Cursor = CreateCircleCursor(mosaicSize);
         }
         else
         {
@@ -94,20 +108,20 @@ public class EditingForm : Form
         mosaicSize = size;
         if (currentTool == Tool.Mosaic)
         {
-            pictureBox1.Cursor = CreateCircleCursor(mosaicSize); // 更新光标尺寸
+            pictureBox1.Cursor = CreateCircleCursor(mosaicSize);
         }
     }
 
     private Cursor CreateCircleCursor(int size)
     {
-        int cursorSize = size + 4; // 略大于马赛克尺寸，便于可视化
+        int cursorSize = size + 4;
         using (Bitmap bitmap = new Bitmap(cursorSize, cursorSize))
         using (Graphics g = Graphics.FromImage(bitmap))
         {
             g.Clear(Color.Transparent);
             using (Pen pen = new Pen(Color.Black, 2))
             {
-                g.DrawEllipse(pen, 2, 2, size, size); // 绘制圆形光标
+                g.DrawEllipse(pen, 2, 2, size, size);
             }
             IntPtr hIcon = bitmap.GetHicon();
             return new Cursor(hIcon);
@@ -126,17 +140,20 @@ public class EditingForm : Form
 
     public void SaveToClipboard()
     {
+        // 创建最终图片，仅包含编辑内容，不包含边框
         Bitmap finalImage = new Bitmap(selectedRect.Width, selectedRect.Height);
         using (Graphics gx = Graphics.FromImage(finalImage))
         {
             gx.TextRenderingHint = TextRenderingHint.AntiAlias;
-            gx.DrawImage(originalImage, 0, 0);
+            gx.Clear(Color.Transparent); // 确保背景透明
+            gx.DrawImage(originalImage, 0, 0); // 绘制原始图像
             foreach (var op in committedOperations)
             {
-                op.Draw(gx);
+                op.Draw(gx); // 仅绘制操作内容
             }
         }
         Clipboard.SetImage(finalImage);
+        Console.WriteLine("Image saved to clipboard without border");
         this.Close();
         if (parentForm != null) parentForm.Close();
         Application.Exit();
@@ -241,7 +258,7 @@ public class EditingForm : Form
                 string[] lines = textInputBox.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
                 float maxWidth = 0;
                 float totalHeight = 0;
-                float lineHeight = gx.MeasureString(" ", textFont).Height * 0.8f; // 手动设置0.8倍行距
+                float lineHeight = gx.MeasureString(" ", textFont).Height * 0.8f;
                 foreach (var line in lines)
                 {
                     SizeF lineSize = gx.MeasureString(line + " ", textFont);
@@ -299,9 +316,22 @@ public class EditingForm : Form
         {
             if (currentOperation != null)
             {
-                if (currentOperation is DrawRectangle rect) rect.EndPoint = e.Location;
-                else if (currentOperation is DrawCircle circle) circle.EndPoint = e.Location;
-                pictureBox1.Invalidate();
+                if (currentOperation is DrawRectangle rect)
+                {
+                    rect.EndPoint = new Point(
+                        Math.Max(0, Math.Min(e.X, selectedRect.Width - 1)),
+                        Math.Max(0, Math.Min(e.Y, selectedRect.Height - 1))
+                    );
+                    pictureBox1.Invalidate();
+                }
+                else if (currentOperation is DrawCircle circle)
+                {
+                    circle.EndPoint = new Point(
+                        Math.Max(0, Math.Min(e.X, selectedRect.Width - 1)),
+                        Math.Max(0, Math.Min(e.Y, selectedRect.Height - 1))
+                    );
+                    pictureBox1.Invalidate();
+                }
             }
             else if (currentTool == Tool.Mosaic)
             {
@@ -365,7 +395,7 @@ public class EditingForm : Form
             {
                 foreach (var point in mosaicPoints)
                 {
-                    int size = mosaicSize; // 使用当前马赛克尺寸
+                    int size = mosaicSize;
                     Rectangle rect = new Rectangle(point.X - size / 2, point.Y - size / 2, size, size);
                     rect.Intersect(new Rectangle(0, 0, originalImage.Width, originalImage.Height));
                     if (rect.Width > 0 && rect.Height > 0)
@@ -375,13 +405,6 @@ public class EditingForm : Form
                 }
             }
         }
-
-        using (Pen pen = new Pen(Color.LightBlue, 3))
-        {
-            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            e.Graphics.DrawRectangle(pen, 0, 0, selectedRect.Width - 1, selectedRect.Height - 1);
-        }
-
         DrawResizeHandles(e.Graphics, new Rectangle(0, 0, selectedRect.Width, selectedRect.Height));
     }
 
@@ -464,7 +487,7 @@ public class CustomTextBox : TextBox
         get
         {
             CreateParams cp = base.CreateParams;
-            cp.ExStyle |= 0x20; // WS_EX_TRANSPARENT
+            cp.ExStyle |= 0x20;
             return cp;
         }
     }
@@ -504,7 +527,11 @@ public class DrawRectangle : DrawOperation
                 Math.Abs(StartPoint.X - EndPoint.X),
                 Math.Abs(StartPoint.Y - EndPoint.Y)
             );
-            g.DrawRectangle(pen, rect);
+            rect.Intersect(new Rectangle(0, 0, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height));
+            if (rect.Width > 0 && rect.Height > 0)
+            {
+                g.DrawRectangle(pen, rect);
+            }
         }
     }
 }
@@ -526,7 +553,11 @@ public class DrawCircle : DrawOperation
                 Math.Abs(StartPoint.X - EndPoint.X),
                 Math.Abs(StartPoint.Y - EndPoint.Y)
             );
-            g.DrawEllipse(pen, rect);
+            rect.Intersect(new Rectangle(0, 0, (int)g.VisibleClipBounds.Width, (int)g.VisibleClipBounds.Height));
+            if (rect.Width > 0 && rect.Height > 0)
+            {
+                g.DrawEllipse(pen, rect);
+            }
         }
     }
 }
