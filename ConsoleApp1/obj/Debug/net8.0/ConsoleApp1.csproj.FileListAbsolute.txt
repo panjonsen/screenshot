@@ -1,0 +1,7 @@
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.csproj.AssemblyReference.cache
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\Avalonia\Resources.Inputs.cache
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\Avalonia\resources
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.AssemblyInfoInputs.cache
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.AssemblyInfo.cs
+G:\.net\Selection\ConsoleApp1\obj\Debug\net8.0\ConsoleApp1.csproj.CoreCompileInputs.cache

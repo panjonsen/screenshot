@@ -1,0 +1,10 @@
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.csproj.AssemblyReference.cache
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.GeneratedMSBuildEditorConfig.editorconfig
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.AssemblyInfoInputs.cache
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.AssemblyInfo.cs
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.csproj.CoreCompileInputs.cache
+G:\.net\Selection\SelectionWin\bin\Debug\net48\SelectionWin.exe.config
+G:\.net\Selection\SelectionWin\bin\Debug\net48\SelectionWin.exe
+G:\.net\Selection\SelectionWin\bin\Debug\net48\SelectionWin.pdb
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.exe
+G:\.net\Selection\SelectionWin\obj\Debug\net48\SelectionWin.pdb

@@ -1,0 +1,14 @@
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.GeneratedMSBuildEditorConfig.editorconfig
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.AssemblyInfoInputs.cache
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.AssemblyInfo.cs
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.csproj.CoreCompileInputs.cache
+G:\.net\Selection\SelectionForm\bin\Debug\net8.0-windows\SelectionForm.exe
+G:\.net\Selection\SelectionForm\bin\Debug\net8.0-windows\SelectionForm.deps.json
+G:\.net\Selection\SelectionForm\bin\Debug\net8.0-windows\SelectionForm.runtimeconfig.json
+G:\.net\Selection\SelectionForm\bin\Debug\net8.0-windows\SelectionForm.dll
+G:\.net\Selection\SelectionForm\bin\Debug\net8.0-windows\SelectionForm.pdb
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.dll
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\refint\SelectionForm.dll
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.pdb
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\SelectionForm.genruntimeconfig.cache
+G:\.net\Selection\SelectionForm\obj\Debug\net8.0-windows\ref\SelectionForm.dll

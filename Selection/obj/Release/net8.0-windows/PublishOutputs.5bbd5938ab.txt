@@ -1,0 +1,5 @@
+G:\.net\Selection\Selection\bin\Release\net8.0-windows\publish\Selection.exe
+G:\.net\Selection\Selection\bin\Release\net8.0-windows\publish\Selection.dll
+G:\.net\Selection\Selection\bin\Release\net8.0-windows\publish\Selection.deps.json
+G:\.net\Selection\Selection\bin\Release\net8.0-windows\publish\Selection.runtimeconfig.json
+G:\.net\Selection\Selection\bin\Release\net8.0-windows\publish\Selection.pdb

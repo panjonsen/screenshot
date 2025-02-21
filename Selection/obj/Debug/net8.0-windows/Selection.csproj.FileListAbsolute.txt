@@ -1,0 +1,14 @@
+G:\.net\Selection\Selection\bin\Debug\net8.0-windows\Selection.exe
+G:\.net\Selection\Selection\bin\Debug\net8.0-windows\Selection.deps.json
+G:\.net\Selection\Selection\bin\Debug\net8.0-windows\Selection.runtimeconfig.json
+G:\.net\Selection\Selection\bin\Debug\net8.0-windows\Selection.dll
+G:\.net\Selection\Selection\bin\Debug\net8.0-windows\Selection.pdb
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.GeneratedMSBuildEditorConfig.editorconfig
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.AssemblyInfoInputs.cache
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.AssemblyInfo.cs
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.csproj.CoreCompileInputs.cache
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.dll
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\refint\Selection.dll
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.pdb
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\Selection.genruntimeconfig.cache
+G:\.net\Selection\Selection\obj\Debug\net8.0-windows\ref\Selection.dll
