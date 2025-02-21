@@ -1,4 +1,4 @@
-﻿namespace SelectionForm;
+﻿namespace SelectionWin;
 
 partial class SelectionForm
 {

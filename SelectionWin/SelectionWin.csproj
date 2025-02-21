@@ -7,7 +7,6 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>enable</ImplicitUsings>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <RootNamespace>SelectionForm</RootNamespace>
         <LangVersion>default</LangVersion>
     </PropertyGroup>
 
