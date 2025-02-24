@@ -6,7 +6,7 @@
 ![image](https://github.com/user-attachments/assets/9a49af8e-5da7-4d22-adcb-bd6651eae190)
 
 ### 中文
-`SelectionWin` 是一个基于 Windows Forms 的屏幕截图和编辑工具，允许用户从屏幕上选择一个区域并对其进行编辑。用户可以绘制矩形、圆形、文字和马赛克，支持动态调整编辑区域大小和撤销操作。编辑完成后，结果可保存到剪贴板。该项目旨在提供一个轻量、直观的截图编辑体验。
+`SelectionWin` 是一个基于 Windows Forms 的屏幕截图和编辑工具，允许用户从屏幕上选择一个区域并对其进行编辑。用户可以绘制矩形、圆形、文字和马赛克，支持动态调整编辑区域大小和撤销操作。编辑完成后，结果可保存到剪贴板。该项目旨在提供一个轻量、直观的截图编辑体验。  另有c++ qt 版本可以阅览我的其他公开仓库
 
 ### English
 `SelectionWin` is a Windows Forms-based screenshot and editing tool that enables users to select a region from the screen and edit it. Users can draw rectangles, circles, text, and mosaics, with support for dynamically resizing the editing area and undoing operations. Once editing is complete, the result can be saved to the clipboard. This project aims to provide a lightweight and intuitive screenshot editing experience.
