@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace SelectionWin;
 
 public partial class SelectionForm : Form
@@ -63,6 +65,7 @@ public partial class SelectionForm : Form
 
     private void SelectionForm_MouseMove(object sender, MouseEventArgs e)
     {
+        Debug.WriteLine("依旧触发了");
         if (!isSelecting)
         {
             magnifierForm.UpdateMagnifier(e.Location);
